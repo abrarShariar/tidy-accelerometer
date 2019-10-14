@@ -27,4 +27,9 @@ dir.create(file.path("result-dataset"))
 write.csv(merge_data, file="result-dataset/1-merge-data.csv")
 
 
-
+# ----- start of Q:2 -----
+# filter feature indexs from features.txt
+d <- read.table("dataset/uci_dataset/features.txt")
+col_indices <- c(paste("V",d[grep("std", d$V2),"V1"], sep=""), paste("V",d[grep("[Mm]ean", d$V2),"V1"], sep=""))
+extracted_data <- merge_data[,c("subject", "label",col_indices)]
+write.csv(extracted_data, file="result-dataset/2-extract-data.csv")
