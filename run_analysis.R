@@ -1,4 +1,5 @@
 library(dplyr)
+library(stringr)
 # load train data
 subject_train <- read.table("dataset/uci_dataset/train/subject_train.txt")
 x_train <- read.table("dataset/uci_dataset/train/X_train.txt")
@@ -39,3 +40,14 @@ labels <- read.table("dataset/uci_dataset/activity_labels.txt")
 colnames(labels) <- c("no", "text")
 label_data <- merge(labels, merge_data, by.x="no", by.y="label")
 write.csv(label_data, file="result-dataset/3-label-data.csv")
+
+
+# ---- start of Q:4 ----
+feature_list <- read.table("dataset/uci_dataset/features.txt")
+feature_labels <- feature_list$V2
+feature_labels <- str_replace_all(feature_labels, c("-"=".", "[(]"="", "[)]"="", ","="."))
+colnames(label_data) <- c("activity_no", "activity_label","subject", feature_labels)
+write.csv(label_data, file="result-dataset/4-descriptive-data.csv")
+
+# ----- start of Q:5 ----
+
